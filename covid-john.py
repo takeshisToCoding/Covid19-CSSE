@@ -1,6 +1,7 @@
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
+import os
 from datetime import date
 
 
@@ -16,7 +17,8 @@ def getData(url,save=True):
   datum = pd.read_csv(url)
   if save:
     today = date.today().strftime('%d-%m-%Y')
-    datum.to_csv('john-hopkins-dataset-'+ today + '.csv')
+    file_name = os.path.basename(url)
+    datum.to_csv(today+file_name)
   return datum
 
 def processDataset(df,count_type='Confirmed'):
@@ -36,7 +38,7 @@ def processDataset(df,count_type='Confirmed'):
 
 if __name__=='__main__':
    
-  raw_confirmed = getData(john_hopkins_confirmed,False)
+  raw_confirmed = getData(john_hopkins_confirmed,True)
   raw_deaths = getData(john_hopkins_deaths,False)
   raw_recovered = getData(john_hopkins_recovered,False)
   # print("Header")
