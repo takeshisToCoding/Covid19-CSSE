@@ -37,6 +37,37 @@ optional arguments:
   --no_plot          Do not plot anything, store figures to disk
 
 ```
-The only required parameter is --file that points to the dataset previously donwloaded by the covid-john.py script.
+The only required parameter is --file that points to the dataset previously downloaded by the covid-john.py script.
 The data plotted is the number of confirmed, deaths and recovered cases. It also plots new cases reported daily or first differences. An smoothed version of this graph is also provided since numerical differences tend to be very noisy.
 
+
+### Modelling
+Currently 2 models are supported in the model_covi.py script: Gaussian model and logistic model. Meaning given the data from the previous scripts we can fit an exponential curve to the new cases. 
+The usage is as follows.
+
+```bash
+python3 model_covid.py -h
+usage: model_covid.py [-h] [--country COUNTRY] --file FILE [--log]
+                      [--amplitude AMPLITUDE] [--stddev STDDEV] [--logistic]
+                      [--peak PEAK] [-k GROWTH_RATE]
+
+Covid-19 gaussian modelling.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --country COUNTRY     Which country to model, defaul Mexico
+  --file FILE           Preprocessed csv dataset file
+  --log                 Use logarithmic scale
+  --amplitude AMPLITUDE
+                        Peak number of cases expected
+  --stddev STDDEV       Width of gaussian around peak infections
+  --logistic            Use logistic model
+  --peak PEAK           Number of days, from first infection to peak, to use
+                        as initial guess in curve fitting
+  -k GROWTH_RATE, --growth-rate GROWTH_RATE
+                        Logistic growth rate
+```
+
+Again the only required parameter is file wich points to the preprocessed dataset. The script uses non linear squares
+for the fit and default params are good for convergence. However it is worth noting that the logistic model is way more
+sensible to initial parameter than the gaussian model.

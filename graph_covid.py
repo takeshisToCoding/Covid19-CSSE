@@ -49,7 +49,6 @@ if __name__ == '__main__':
     # Some countries have more than one region so use groupby
     coalesced_df = country_df.groupby('Date').sum()
     coalesced_diff = coalesced_df.diff()
-
     # First difference is noisy, use Savitzky–Golay to smooth it out
     data_np = coalesced_diff[plot_cols[0]].to_numpy()
     # print(data_np)
